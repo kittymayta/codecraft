@@ -1,0 +1,90 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  &__links {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+      position: relative;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      transition: color 0.2s ease;
+
+      &:hover,
+      &.active {
+        color: #007bff;
+
+        &.active::after {
+          content: '';
+          position: absolute;
+          left: 0; bottom: -4px;
+          width: 100%; height: 2px;
+          background: #007bff;
+        }
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+
+    a.btn,
+    button.btn-out {
+      padding: 0.4rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    a.btn {
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+
+      &:hover {
+        background: #0056b3;
+      }
+    }
+
+    a.btn--outline {
+      background: transparent;
+      color: #007bff;
+      border: 2px solid #007bff;
+
+      &:hover {
+        background: #007bff;
+        color: #fff;
+      }
+    }
+
+    button.btn-out {
+      background: transparent;
+      color: #dc3545;
+
+      &:hover {
+        color: #a71d2a;
+      }
+    }
+  }
+}

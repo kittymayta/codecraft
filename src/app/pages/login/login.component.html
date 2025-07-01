@@ -1,0 +1,49 @@
+<!-- src/app/pages/login/login.component.html -->
+<div class="overlay">
+  <form class="login-box" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2>Iniciar Sesión</h2>
+
+    <input
+      type="text"
+      formControlName="username"
+      placeholder="Usuario"
+    />
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Contraseña"
+    />
+
+    <div
+      class="error"
+      *ngIf="loginForm.invalid && (loginForm.touched || loginForm.dirty)"
+    >
+      Ambos campos son requeridos
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid || isLoading">
+      <span *ngIf="!isLoading">Entrar</span>
+      <span *ngIf="isLoading">Cargando...</span>
+    </button>
+
+    <button
+      type="button"
+      class="cancel"
+      routerLink="/"
+      [disabled]="isLoading"
+    >
+      Cancelar
+    </button>
+
+    <div class="register-link">
+      ¿Aún no tienes cuenta?
+      <a routerLink="/register">Regístrate aquí</a>
+    </div>
+
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <div *ngIf="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  </form>
+</div>

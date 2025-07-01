@@ -1,0 +1,44 @@
+<div class="overlay">
+  <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Crear Cuenta</h2>
+
+    <input
+      type="text"
+      formControlName="username"
+      placeholder="Usuario"
+    />
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Contraseña (mínimo 6 caracteres)"
+    />
+
+    <div class="error" *ngIf="form.invalid && (form.touched || form.dirty)">
+      Todos los campos son requeridos y la contraseña debe tener al menos 6 caracteres.
+    </div>
+
+    <button type="submit" [disabled]="form.invalid || isLoading">
+      <span *ngIf="!isLoading">Registrarse</span>
+      <span *ngIf="isLoading">Cargando...</span>
+    </button>
+    <button
+      type="button"
+      class="cancel"
+      routerLink="/"
+      [disabled]="isLoading"
+    >
+      Cancelar
+    </button>
+
+    <div class="register-link">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login">Iniciar Sesión</a>
+    </div>
+
+    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <div *ngIf="isLoading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  </form>
+</div>

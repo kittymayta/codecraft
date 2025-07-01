@@ -1,0 +1,49 @@
+<!-- src/app/pages/ask-question/ask-question.component.html -->
+<div class="overlay">
+  <div class="ask-box">
+    <h2>Haz una pregunta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input formControlName="title" placeholder="Título de la pregunta" />
+      <textarea
+        formControlName="content"
+        rows="5"
+        placeholder="Contenido de la pregunta"
+      ></textarea>
+
+      <label>Etiquetas:</label>
+      <div class="tag-list">
+        <label *ngFor="let tag of tags">
+          <input
+            type="checkbox"
+            [value]="tag.name"
+            (change)="onTagToggle($event)"
+          />
+          {{ tag.name }}
+        </label>
+      </div>
+
+      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <button
+        type="submit"
+        [disabled]="form.invalid || isLoading"
+      >
+        <span *ngIf="!isLoading">Publicar</span>
+        <span *ngIf="isLoading">Enviando...</span>
+      </button>
+      <button
+        type="button"
+        class="cancel"
+        routerLink="/questions"
+        [disabled]="isLoading"
+      >
+        Cancelar
+      </button>
+
+      <div *ngIf="isLoading" class="spinner-overlay">
+        <div class="spinner"></div>
+      </div>
+    </form>
+  </div>
+</div>
