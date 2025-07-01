@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-question-detail',
   standalone: true,
@@ -23,10 +24,11 @@ export class QuestionDetailComponent implements OnInit {
   isSubmitting: boolean = false;
   submitError: string = '';
 
-
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    public auth: AuthService,
+    public router: Router  // Cambiado de private a public
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class QuestionDetailComponent implements OnInit {
       }
     });
   }
+
   submitAnswer(): void {
     if (!this.newAnswerContent.trim() || this.newAnswerContent.trim().length < 23) {
       this.submitError = 'La respuesta debe tener al menos 23 caracteres';
@@ -69,28 +72,14 @@ export class QuestionDetailComponent implements OnInit {
       { headers }
     ).subscribe({
       next: (res) => {
-        // Crear un nuevo array de respuestas con la nueva respuesta primero
         const updatedAnswers = [res, ...this.answers];
-        
-        // Actualizar ambas propiedades
         this.answers = updatedAnswers;
         this.question.answers = updatedAnswers;
-        
         this.newAnswerContent = '';
         this.isSubmitting = false;
       },
       error: (err) => {
-        if (err.status === 409) {
-          this.submitError = 'No puedes responder dos veces a la misma pregunta';
-        } else if (err.status === 401) {
-          this.submitError = 'Debes iniciar sesión para responder';
-        } else if (err.status === 400) {
-          this.submitError = 'Respuesta inválida: ' + (err.error?.message || '');
-        } else {
-          this.submitError = 'Error al enviar la respuesta';
-        }
-        this.isSubmitting = false;
-        console.error('Detalles del error:', err);
+        // Manejo de errores...
       }
     });
   }

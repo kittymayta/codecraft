@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient }       from '@angular/common/http';
-import { tap, Observable }  from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { tap, Observable } from 'rxjs';
 
 export interface AuthResponse {
   username: string;
@@ -26,7 +26,9 @@ export class AuthService {
       .post<AuthResponse>(`${this.apiUrl}/log-in`, credentials)
       .pipe(
         tap((res: AuthResponse) => {
-          localStorage.setItem('token', res.token);
+          if (res.token) {
+            localStorage.setItem('token', res.token);
+          }
         })
       );
   }
@@ -36,17 +38,20 @@ export class AuthService {
       .post<AuthResponse>(`${this.apiUrl}/sign-up`, data)
       .pipe(
         tap((res: AuthResponse) => {
-          localStorage.setItem('token', res.token);
+          if (res.token) {
+            localStorage.setItem('token', res.token);
+          }
         })
       );
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    window.location.reload(); // Forzar recarga para limpiar estado
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.getToken();
   }
   
   getToken(): string | null {

@@ -11,31 +11,52 @@ import { AuthGuard } from './services/auth.guard';
 import { TagComponent } from './pages/tag/tag.component';
 
 export const appRoutes: Routes = [
-  { path: '', component: InicioComponent, title: 'Inicio' },
-  { path: 'login', component: LoginComponent, title: 'Login' },
-  { path: 'register', component: RegisterComponent, title: 'Registro' },
-  { path: 'questions', component: QuestionsListComponent, title: 'Preguntas' },
-  { path: 'tag', component: TagComponent, title: 'Etiquestas Globales'},
-  { path: 'question/:id', component: QuestionDetailComponent, title: 'Detalle Pregunta' },
-
-  // Rutas protegidas
-  {
-    path: 'ask',
-    component: AskQuestionComponent,
-    canActivate: [AuthGuard],
-    title: 'Nueva Pregunta'
+  { 
+    path: '', 
+    component: InicioComponent, 
+    title: 'Inicio' 
   },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AuthGuard],
-    title: 'Perfil'
+  { 
+    path: 'login', 
+    component: LoginComponent, 
+    title: 'Login' 
   },
+  { 
+    path: 'register', 
+    component: RegisterComponent, 
+    title: 'Registro' 
+  },
+  { 
+    path: 'questions', 
+    component: QuestionsListComponent, 
+    title: 'Preguntas' // Pública
+  },
+  { 
+    path: 'tag', 
+    component: TagComponent, 
+    title: 'Etiquetas Globales' // Pública
+  },
+  { 
+    path: 'question/:id', 
+    component: QuestionDetailComponent, 
+    title: 'Detalle Pregunta' // Pública
+  },
+  // Rutas protegidas (requieren autenticación)
   { 
     path: 'ask', 
     component: AskQuestionComponent,
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard], 
+    title: 'Nueva Pregunta'
   },
-
-  { path: '**', component: NotFoundComponent, title: 'No Encontrado' }
+  { 
+    path: 'profile', 
+    component: ProfileComponent,
+    canActivate: [AuthGuard], 
+    title: 'Perfil'
+  },
+  { 
+    path: '**', 
+    component: NotFoundComponent, 
+    title: 'No Encontrado' 
+  }
 ];

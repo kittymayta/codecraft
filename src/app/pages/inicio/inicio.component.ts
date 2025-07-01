@@ -1,8 +1,9 @@
-// src/app/pages/inicio/inicio.component.ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { QuestionsListComponent } from '../questions-list/questions-list.component';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service'; // Añade AuthService
+import { Router } from '@angular/router'; // Añade Router
 
 @Component({
   selector: 'app-inicio',
@@ -11,4 +12,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.scss']
 })
-export class InicioComponent {}
+export class InicioComponent {
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {
+    // Si la ruta está protegida y el usuario no está autenticado
+    if (!this.auth.isLoggedIn()) {
+      // Redirigir a login con returnUrl
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: this.router.url }
+      });
+    }
+  }
+}

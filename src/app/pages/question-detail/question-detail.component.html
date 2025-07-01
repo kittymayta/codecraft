@@ -1,72 +1,86 @@
 <div *ngIf="loading" class="spinner-overlay">
-    <div class="spinner"></div>
+  <div class="spinner"></div>
+</div>
+
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="question" class="question-detail-container">
+  <div class="question-header">
+    <h1>{{ question.title }}</h1>
   </div>
-  
-  <div *ngIf="error" class="error">{{ error }}</div>
-  
-  <div *ngIf="question" class="question-detail-container">
-    <div class="question-header">
-      <h1>{{ question.title }}</h1>
-    </div>
-  
-    <div class="question-content">
-      <div class="content">
-        <div class="post-body">{{ question.content }}</div>
-        
-        <div class="tags-container" *ngIf="question.tags">
-          <span *ngFor="let tag of question.tags" class="tag">
-            {{ tag.name }}
-          </span>
+
+  <div class="question-content">
+    <div class="content">
+      <div class="post-body">{{ question.content }}</div>
+      
+      <div class="tags-container" *ngIf="question.tags">
+        <span *ngFor="let tag of question.tags" class="tag">
+          {{ tag.name }}
+        </span>
+      </div>
+      
+      <div class="post-footer">
+        <div class="user-info">
+          <span class="date">Preguntado el {{ question.createdAt | date }}</span>
+          <div class="user-details">
+            <div class="user-meta">
+              <span>{{ question.author?.username || 'Anónimo' }}</span>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="answers-section">
+    <h2>{{ answers.length }} Respuestas</h2>
+    
+    <div *ngFor="let answer of answers" class="answer">
+      <div class="content">
+        <div class="post-body">{{ answer.content }}</div>
         
         <div class="post-footer">
           <div class="user-info">
-            <span class="date">Preguntado el {{ question.createdAt | date }}</span>
+            <span class="date">Respondido el {{ answer.createdAt | date }}</span>
             <div class="user-details">
               <div class="user-meta">
-                <span>{{ question.author?.username || 'Anónimo' }}</span>
+                <span>{{ answer.author?.username || 'Anónimo' }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
-    <div class="answers-section">
-      <h2>{{ question.answers?.length || 0 }} Respuestas</h2>
-      
-      <div *ngFor="let answer of answers" class="answer">
-        <div class="content">
-          <div class="post-body">{{ answer.content }}</div>
-          
-          <div class="post-footer">
-            <div class="user-info">
-              <span class="date">Respondido el {{ answer.createdAt | date }}</span>
-              <div class="user-details">
-                <div class="user-meta">
-                  <span>{{ answer.author?.username || 'Anónimo' }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="post-answer-section">
-      <h2>Tu respuesta</h2>
-      <textarea [(ngModel)]="newAnswerContent" placeholder="Escribe tu respuesta aquí..." 
+  </div>
+
+  <div class="post-answer-section">
+    <h2>Tu respuesta</h2>
+    
+    <div *ngIf="auth.isLoggedIn(); else loginPrompt">
+      <textarea [(ngModel)]="newAnswerContent" 
+                placeholder="Escribe tu respuesta aquí..." 
                 class="answer-textarea"></textarea>
       
-      <div *ngIf="submitError" class="error">{{ submitError }}</div>
+      <div *ngIf="submitError" class="error">
+        {{ submitError }}
+        <div *ngIf="submitError.includes('al menos') && newAnswerContent.trim().length < 23" class="error-detail">
+          (Actual: {{ newAnswerContent.trim().length }}/23 caracteres)
+        </div>
+      </div>
       
       <button (click)="submitAnswer()" class="submit-btn" [disabled]="isSubmitting">
         {{ isSubmitting ? 'Enviando...' : 'Publicar respuesta' }}
       </button>
     </div>
-    <div *ngIf="submitError" class="error">
-      {{ submitError }}
-      <div *ngIf="newAnswerContent.trim().length < 23" class="error-detail">
-        (Actual: {{ newAnswerContent.trim().length }}/23 caracteres)
+    
+    <ng-template #loginPrompt>
+      <div class="login-prompt">
+        <p>Para responder, por favor 
+          <a [routerLink]="['/login']" [queryParams]="{ returnUrl: router.url }">
+            inicia sesión
+          </a>
+        </p>
       </div>
-    </div>
+    </ng-template>
   </div>
+</div>

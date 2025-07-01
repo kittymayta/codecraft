@@ -2,9 +2,9 @@
   <div class="navbar__logo">CodeCraft</div>
 
   <nav class="navbar__links">
-    <a routerLink="/"        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
     <a routerLink="/questions" routerLinkActive="active">Preguntas</a>
-    <a routerLink="/ask"      routerLinkActive="active" *ngIf="auth.isLoggedIn()">Nueva Pregunta</a>
+    <a routerLink="/ask" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Nueva Pregunta</a>
     <a routerLink="/tag" routerLinkActive="active">Etiquetas</a>
   </nav>
 
@@ -14,7 +14,13 @@
       <button (click)="logout()" class="btn-out">Cerrar Sesión</button>
     </ng-container>
     <ng-template #guest>
-      <a routerLink="/login"    routerLinkActive="active" class="btn">Iniciar Sesión</a>
+      <!-- Actualiza este enlace para incluir returnUrl -->
+      <a [routerLink]="['/login']" 
+         [queryParams]="{ returnUrl: router.url }" 
+         routerLinkActive="active" 
+         class="btn">
+        Iniciar Sesión
+      </a>
       <a routerLink="/register" routerLinkActive="active" class="btn btn--outline">Registrarse</a>
     </ng-template>
   </div>

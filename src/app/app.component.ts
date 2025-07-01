@@ -1,6 +1,5 @@
-//src/app/app.compponent.ts
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; // Añade Router
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
 
@@ -12,7 +11,10 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public auth: AuthService) {}
+  constructor(
+    public auth: AuthService,
+    public router: Router  // Inyecta Router y hazlo público
+  ) {}
   
   logout() {
     this.auth.logout();
