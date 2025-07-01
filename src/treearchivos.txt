@@ -1,0 +1,86 @@
+Listado de rutas de carpetas
+El n£mero de serie del volumen es D430-E350
+C:.
+³   index.html
+³   main.ts
+³   styles.scss
+³   treearchivos.txt
+³   
+ÀÄÄÄapp
+    ³   app.component.html
+    ³   app.component.scss
+    ³   app.component.spec.ts
+    ³   app.component.ts
+    ³   app.config.ts
+    ³   app.routes.ts
+    ³   tag.service.spec.ts
+    ³   tag.service.ts
+    ³   
+    ÃÄÄÄpages
+    ³   ÃÄÄÄask-question
+    ³   ³       ask-question.component.html
+    ³   ³       ask-question.component.scss
+    ³   ³       ask-question.component.spec.ts
+    ³   ³       ask-question.component.ts
+    ³   ³       
+    ³   ÃÄÄÄinicio
+    ³   ³       inicio.component.html
+    ³   ³       inicio.component.scss
+    ³   ³       inicio.component.spec.ts
+    ³   ³       inicio.component.ts
+    ³   ³       
+    ³   ÃÄÄÄlogin
+    ³   ³       login.component.html
+    ³   ³       login.component.scss
+    ³   ³       login.component.spec.ts
+    ³   ³       login.component.ts
+    ³   ³       
+    ³   ÃÄÄÄnot-found
+    ³   ³       not-found.component.html
+    ³   ³       not-found.component.scss
+    ³   ³       not-found.component.spec.ts
+    ³   ³       not-found.component.ts
+    ³   ³       
+    ³   ÃÄÄÄprofile
+    ³   ³       profile.component.html
+    ³   ³       profile.component.scss
+    ³   ³       profile.component.spec.ts
+    ³   ³       profile.component.ts
+    ³   ³       
+    ³   ÃÄÄÄquestion-detail
+    ³   ³       question-detail.component.html
+    ³   ³       question-detail.component.scss
+    ³   ³       question-detail.component.spec.ts
+    ³   ³       question-detail.component.ts
+    ³   ³       
+    ³   ÃÄÄÄquestions-list
+    ³   ³       questions-list.component.html
+    ³   ³       questions-list.component.scss
+    ³   ³       questions-list.component.spec.ts
+    ³   ³       questions-list.component.ts
+    ³   ³       
+    ³   ÃÄÄÄregister
+    ³   ³       register.component.html
+    ³   ³       register.component.scss
+    ³   ³       register.component.spec.ts
+    ³   ³       register.component.ts
+    ³   ³       
+    ³   ÀÄÄÄtag
+    ³           tag.component.html
+    ³           tag.component.scss
+    ³           tag.component.spec.ts
+    ³           tag.component.ts
+    ³           Tag.ts
+    ³           
+    ÃÄÄÄpipes
+    ³       truncate.pipe.ts
+    ³       
+    ÀÄÄÄservices
+            api.service.spec.ts
+            api.service.ts
+            auth.guard.ts
+            auth.interceptor.ts
+            auth.service.ts
+            question.service.ts
+            tag.service.ts
+            
