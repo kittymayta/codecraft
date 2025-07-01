@@ -14,7 +14,7 @@ export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Registro' },
   { path: 'questions', component: QuestionsListComponent, title: 'Preguntas' },
-  { path: 'question/:slug', component: QuestionDetailComponent, title: 'Detalle Pregunta' },
+  { path: 'question/:id', component: QuestionDetailComponent, title: 'Detalle Pregunta' },
 
   // Rutas protegidas
   {
