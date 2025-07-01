@@ -1,1 +1,55 @@
-<p>question-detail works!</p>
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+  
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <div *ngIf="question" class="question-detail-container">
+    <div class="question-header">
+      <h1>{{ question.title }}</h1>
+    </div>
+  
+    <div class="question-content">
+      <div class="content">
+        <div class="post-body">{{ question.content }}</div>
+        
+        <div class="tags-container" *ngIf="question.tags">
+          <span *ngFor="let tag of question.tags" class="tag">
+            {{ tag.name }}
+          </span>
+        </div>
+        
+        <div class="post-footer">
+          <div class="user-info">
+            <span class="date">Preguntado el {{ question.createdAt | date }}</span>
+            <div class="user-details">
+              <div class="user-meta">
+                <span>{{ question.author?.username || 'Anónimo' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="answers-section">
+      <h2>{{ question.answers?.length || 0 }} Respuestas</h2>
+      
+      <div *ngFor="let answer of question.answers" class="answer">
+        <div class="content">
+          <div class="post-body">{{ answer.content }}</div>
+          
+          <div class="post-footer">
+            <div class="user-info">
+              <span class="date">Respondido el {{ answer.createdAt | date }}</span>
+              <div class="user-details">
+                <div class="user-meta">
+                  <span>{{ answer.author?.username || 'Anónimo' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

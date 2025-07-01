@@ -1,20 +1,23 @@
 <div class="questions-list-container">
-    <h2>Últimas Preguntas</h2>
-  
-    <div *ngIf="loading" class="spinner-overlay">
-      <div class="spinner"></div>
-    </div>
-  
-    <div *ngIf="error" class="error">{{ error }}</div>
-  
-    <div *ngIf="!loading && questions.length === 0" class="empty">No hay preguntas todavía.</div>
-  
-    <ul class="question-list" *ngIf="!loading && questions.length > 0">
-      <li *ngFor="let q of questions" class="question-item">
-        <h3>{{ q.title }}</h3>
-        <p>{{ q.content }}</p>
-        <small>Autor: {{ q.author?.username || 'Anónimo' }}</small>
-      </li>
-    </ul>
+  <h2>Últimas Preguntas</h2>
+
+  <div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
   </div>
-  
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && questions.length === 0" class="empty">
+    No hay preguntas todavía.
+  </div>
+
+  <ul class="question-list" *ngIf="!loading && questions.length > 0">
+    <li *ngFor="let q of questions" class="question-item">
+      <a [routerLink]="['/question', q.id]" class="question-link">
+        <h3>{{ q.title }}</h3>
+        <p>{{ q.content | truncate: 150 }}</p>
+        <small>Autor: {{ q.author?.username || 'Anónimo' }}</small>
+      </a>
+    </li>
+  </ul>
+</div>
