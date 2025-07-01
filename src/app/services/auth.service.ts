@@ -26,7 +26,7 @@ export class AuthService {
       .post<AuthResponse>(`${this.apiUrl}/log-in`, credentials)
       .pipe(
         tap((res: AuthResponse) => {
-          localStorage.setItem('authToken', res.token);
+          localStorage.setItem('token', res.token);
         })
       );
   }
@@ -36,16 +36,20 @@ export class AuthService {
       .post<AuthResponse>(`${this.apiUrl}/sign-up`, data)
       .pipe(
         tap((res: AuthResponse) => {
-          localStorage.setItem('authToken', res.token);
+          localStorage.setItem('token', res.token);
         })
       );
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('authToken');
+    return !!localStorage.getItem('token');
+  }
+  
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 }

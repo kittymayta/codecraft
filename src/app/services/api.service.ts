@@ -9,7 +9,7 @@ interface Answer         { id: number; content: string; /* ... */ }
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private base = 'http://localhost:8080/api';
+  private base = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 

@@ -48,25 +48,27 @@ export class AskQuestionComponent implements OnInit {
   onSubmit(): void {
     if (!this.form.valid) return;
 
-    const dto = {
-      title:   this.form.value.title,
-      content: this.form.value.content,
-      tags:    this.form.value.selectedTags as string[]
-    };
+    // Enviar como array, no como Set
+  const dto = {
+    title: this.form.value.title,
+    content: this.form.value.content,
+    tags: this.form.value.selectedTags // Mantener como array
+  };
+  console.log('Enviando pregunta:', dto);
 
     this.isLoading = true;
     this.errorMsg = '';
 
     this.questionService.createQuestion(dto).subscribe({
-      next: _res => {
+      next: (res: any) => {
+        console.log('Pregunta creada:', res);
         this.isLoading = false;
-        // Navegar de regreso a la lista de preguntas
         this.router.navigate(['/questions']);
       },
-      error: err => {
+      error: (err) => {
+        console.error('Error completo:', err);
         this.isLoading = false;
-        this.errorMsg = 'Error al publicar la pregunta';
-        console.error('Create question error:', err);
+        this.errorMsg = err.error?.message || 'Error al publicar la pregunta';
       }
     });
   }
