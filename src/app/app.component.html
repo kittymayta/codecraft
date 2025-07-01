@@ -5,6 +5,7 @@
     <a routerLink="/"        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
     <a routerLink="/questions" routerLinkActive="active">Preguntas</a>
     <a routerLink="/ask"      routerLinkActive="active" *ngIf="auth.isLoggedIn()">Nueva Pregunta</a>
+    <a routerLink="/tag" routerLinkActive="active">Etiquetas</a>
   </nav>
 
   <div class="navbar__actions">

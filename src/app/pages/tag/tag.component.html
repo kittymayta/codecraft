@@ -1,0 +1,9 @@
+<p>Estas son las etiquetas</p>
+<h1>formulario</h1>
+<div [formGroup]="tag">
+    <label for="name">Name: </label>
+    <input id="name" type="name" formControlName="name" />
+    <label for="description">Description: </label>
+    <input id="description" type="description" formControlName="description" />
+    <button (click)="createTag()">Crear tag</button>
+</div>
