@@ -16,4 +16,8 @@ export class TagService {
     return this.http.post<Tag>(`${this.baseUrl}`, tag);
   }
 
+  getAll(): Observable<Tag[]>{
+    return this.http.get<Tag[]>(this.baseUrl);
+  }
+
 }

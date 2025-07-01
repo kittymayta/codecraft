@@ -8,6 +8,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { InicioComponent } from './pages/inicio/inicio.component'; 
 import { AuthGuard } from './services/auth.guard';
+import { TagComponent } from './pages/tag/tag.component';
 
 export const appRoutes: Routes = [
   { path: '', component: InicioComponent, title: 'Inicio' },
@@ -15,7 +16,7 @@ export const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent, title: 'Registro' },
   { path: 'questions', component: QuestionsListComponent, title: 'Preguntas' },
   { path: 'question/:slug', component: QuestionDetailComponent, title: 'Detalle Pregunta' },
-
+  { path: 'tag', component: TagComponent, title: 'Etiquestas Globales'},
   // Rutas protegidas
   {
     path: 'ask',

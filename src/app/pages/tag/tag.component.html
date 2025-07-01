@@ -7,3 +7,9 @@
     <input id="description" type="description" formControlName="description" />
     <button (click)="createTag()">Crear tag</button>
 </div>
+<h1>Etiquetas</h1>
+<ul>
+@for (tag of tags; track $index) {
+    <li>Nombre: {{ tag.name }}</li>
+}
+</ul>
