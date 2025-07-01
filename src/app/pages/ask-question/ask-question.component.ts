@@ -35,7 +35,7 @@ export class AskQuestionComponent implements OnInit {
     this.form = this.fb.group({
       title:        ['', [Validators.required, Validators.minLength(10)]],
       content:      ['', [Validators.required, Validators.minLength(23)]],
-      selectedTags: [[] as string[]]
+      selectedTags: ['']
     });
 
     // Carga simulada de tags
@@ -52,7 +52,7 @@ export class AskQuestionComponent implements OnInit {
   const dto = {
     title: this.form.value.title,
     content: this.form.value.content,
-    tags: this.form.value.selectedTags // Mantener como array
+    tags: (this.form.value.selectedTags as string).split(',')
   };
   console.log('Enviando pregunta:', dto);
 

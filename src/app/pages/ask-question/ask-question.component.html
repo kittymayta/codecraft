@@ -12,16 +12,7 @@
       ></textarea>
 
       <label>Etiquetas:</label>
-      <div class="tag-list">
-        <label *ngFor="let tag of tags">
-          <input
-            type="checkbox"
-            [value]="tag.name"
-            (change)="onTagToggle($event)"
-          />
-          {{ tag.name }}
-        </label>
-      </div>
+      <input formControlName="selectedTags" placeholder="Tags de la pregunta" />
 
       <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
 
