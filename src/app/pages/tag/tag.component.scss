@@ -1,0 +1,112 @@
+/* Fondo borroso */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  /* Caja del formulario de tags */
+  .tag-box {
+    position: relative;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 2.5rem;
+    border-radius: 1.25rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    z-index: 2;
+  
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      font-weight: 500;
+      text-align: center;
+    }
+  
+    label {
+      display: block;
+      margin: 0.5rem 0 0.25rem;
+      font-weight: 500;
+    }
+  
+    input {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.3);
+      color: #000;
+      font-size: 1rem;
+  
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        background: rgba(255, 255, 255, 0.5);
+      }
+    }
+  
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 0.75rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+  
+      &:disabled {
+        background: #999;
+        cursor: not-allowed;
+      }
+  
+      &.cancel {
+        background: #ccc;
+        color: #333;
+  
+        &:hover:not(:disabled) {
+          background: #aaa;
+        }
+      }
+    }
+  
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      text-align: center;
+    }
+  
+    ul.tag-list {
+      margin-top: 2rem;
+      list-style: none;
+      padding: 0;
+  
+      li {
+        background: rgba(255, 255, 255, 0.4);
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+    }
+  }
+  

@@ -14,7 +14,8 @@ export const appRoutes: Routes = [
   { 
     path: '', 
     component: InicioComponent, 
-    title: 'Inicio' 
+    title: 'Inicio',
+    canActivate: [AuthGuard] 
   },
   { 
     path: 'login', 
@@ -29,19 +30,21 @@ export const appRoutes: Routes = [
   { 
     path: 'questions', 
     component: QuestionsListComponent, 
-    title: 'Preguntas' // Pública
+    title: 'Preguntas',
+    canActivate: [AuthGuard] 
   },
   { 
     path: 'tag', 
     component: TagComponent, 
-    title: 'Etiquetas Globales' // Pública
+    title: 'Etiquetas Globales',
+    canActivate: [AuthGuard] 
   },
   { 
     path: 'question/:id', 
     component: QuestionDetailComponent, 
-    title: 'Detalle Pregunta' // Pública
+    title: 'Detalle Pregunta',
+    canActivate: [AuthGuard] 
   },
-  // Rutas protegidas (requieren autenticación)
   { 
     path: 'ask', 
     component: AskQuestionComponent,

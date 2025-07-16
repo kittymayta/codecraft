@@ -16,7 +16,7 @@
       <a [routerLink]="['/question', q.id]" class="question-link">
         <h3>{{ q.title }}</h3>
         <p>{{ q.content | truncate: 150 }}</p>
-        <small>Autor: {{ q.author?.username || 'Anónimo' }}</small>
+        <small *ngIf="q.author?.username">Autor: {{ q.author.username }}</small>
       </a>
     </li>
   </ul>

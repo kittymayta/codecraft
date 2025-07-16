@@ -8,7 +8,8 @@ import {
   Validators
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { TagService, Tag } from '../../services/tag.service';
+import { TagService} from '../../services/tag.service';
+import { Tag } from '../tag/Tag';
 import { QuestionService } from '../../services/question.service';
 
 @Component({
@@ -39,7 +40,7 @@ export class AskQuestionComponent implements OnInit {
     });
 
     // Carga simulada de tags
-    this.tagService.getTags().subscribe({
+    this.tagService.getAll().subscribe({
       next: (data: Tag[]) => (this.tags = data),
       error: err => console.error('Error cargando tags', err)
     });

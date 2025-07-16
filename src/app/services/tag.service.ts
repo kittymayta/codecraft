@@ -1,27 +1,36 @@
 // src/app/services/tag.service.ts
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Tag } from '../pages/tag/Tag';
+import { Observable } from 'rxjs';
 
-export interface Tag {
-  name: string;
-  description: string;
-}
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class TagService {
-  // Simulamos datos como si viniesen del backend
-  private fakeTags: Tag[] = [
-    { name: 'java',        description: 'Java programming' },
-    { name: 'spring',      description: 'Spring Framework' },
-    { name: 'postgresql',  description: 'PostgreSQL Database' },
-    { name: 'angular',     description: 'Angular Framework' },
-    { name: 'typescript',  description: 'TypeScript Language' }
-  ];
 
-  constructor() {}
+  private readonly baseUrl = `http://localhost:8080/tag`;
+  
+  constructor(private http: HttpClient) { }
 
-  getTags(): Observable<Tag[]> {
-    // Devolvemos el array envuelto en un Observable
-    return of(this.fakeTags);
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
+
+  // Crea un nuevo tag
+  create(tag: { name: string; description: string }): Observable<Tag> {
+    return this.http.post<Tag>(`${this.baseUrl}`, tag, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  // Obtiene todos los tags disponibles
+  getAll(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${this.baseUrl}`, {
+      headers: this.getAuthHeaders()
+    });
   }
 }

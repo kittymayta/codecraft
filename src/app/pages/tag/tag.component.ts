@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
-import { TagService } from '../../tag.service';
+// src/app/pages/tag/tag.component.ts
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { TagService } from '../../services/tag.service';
 import { Tag } from './Tag';
 
 @Component({
@@ -10,32 +11,52 @@ import { Tag } from './Tag';
   templateUrl: './tag.component.html',
   styleUrl: './tag.component.scss'
 })
-export class TagComponent implements OnInit{
-  
+export class TagComponent implements OnInit {
+
   tags: Tag[] = [];
+  tagForm!: FormGroup; // ✅ nombre más claro
   private formBuilder = inject(FormBuilder);
 
-  ngOnInit(){
+  constructor(private tagService: TagService) {}
+
+  ngOnInit(): void {
+    this.tagForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required]
+    });
     this.loadTags();
   }
-  constructor(private tagService : TagService){}
 
-  tag = this.formBuilder.group({
-    name: [''],
-    description: ['']
-  })
-  loadTags(){
-    this.tagService.getAll().subscribe(data => {
-      this.tags = data;
-    })
+  loadTags(): void {
+    this.tagService.getAll().subscribe({
+      next: (data) => {
+        this.tags = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar tags:', err);
+      }
+    });
   }
-  createTag(){
-    let nameX = this.tag.value.name as string;
-    let descriptionX = this.tag.value.description as string;
-    let tag = {name: nameX, description: descriptionX}
-    this.tagService.create(tag).subscribe(data => {
-      console.log(data)
-    })
-  }
- 
-}
+
+  createTag(): void {
+    if (this.tagForm.invalid) return;
+
+    const newTag = {
+      name: this.tagForm.value.name,
+      description: this.tagForm.value.description
+    };
+
+    this.tagService.create(newTag).subscribe({
+      next: (data) => {
+        console.log('Tag creado:', data);
+        this.tagForm.reset();
+        this.loadTags();
+      },
+      error: (err) => {
+        console.error('Error al crear tag:', err);
+        if (err.status === 409 && err.error?.message) {
+          alert(`⚠️ ${err.error.message}`); // Puedes usar toast, snackbar, etc.
+        }
+      }
+    });
+  }}

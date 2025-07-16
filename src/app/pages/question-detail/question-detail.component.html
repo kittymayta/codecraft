@@ -5,26 +5,30 @@
 <div *ngIf="error" class="error">{{ error }}</div>
 
 <div *ngIf="question" class="question-detail-container">
+  <!-- Título de la pregunta -->
   <div class="question-header">
     <h1>{{ question.title }}</h1>
   </div>
 
+  <!-- Contenido de la pregunta -->
   <div class="question-content">
     <div class="content">
       <div class="post-body">{{ question.content }}</div>
-      
-      <div class="tags-container" *ngIf="question.tags">
+
+      <!-- Tags -->
+      <div class="tags-container" *ngIf="question.tags?.length">
         <span *ngFor="let tag of question.tags" class="tag">
           {{ tag.name }}
         </span>
       </div>
-      
+
+      <!-- Info del autor -->
       <div class="post-footer">
         <div class="user-info">
-          <span class="date">Preguntado el {{ question.createdAt | date }}</span>
+          <span class="date">Preguntado por:  {{ question.createdAt | date }}</span>
           <div class="user-details">
             <div class="user-meta">
-              <span>{{ question.author?.username || 'Anónimo' }}</span>
+              {{ question.user?.username || question.author?.username || 'Anónimo' }}
             </div>
           </div>
         </div>
@@ -32,19 +36,44 @@
     </div>
   </div>
 
+  <!-- Respuestas -->
   <div class="answers-section">
-    <h2>{{ answers.length }} Respuestas</h2>
-    
+    <h2>{{ answers.length }} Respuesta{{ answers.length !== 1 ? 's' : '' }}</h2>
+
     <div *ngFor="let answer of answers" class="answer">
       <div class="content">
         <div class="post-body">{{ answer.content }}</div>
+
+        <!-- Indicador de respuesta correcta -->
+        <div *ngIf="answer.is_correct" class="correct-answer-label">
+          ✔ Respuesta marcada como correcta
+        </div>
+
+        <!-- Votación (solo si aún se puede votar) -->
+        <div class="voting-actions">
+          <button (click)="vote(answer.id, true)">👍</button>
+            <span>{{ answer.score }}</span>
+          <button (click)="vote(answer.id, false)">👎</button>
+          
+          <span *ngIf="getMostVotedAnswerId() === answer.id" class="top-voted">
+            ⭐ Más votada
+          </span>
+        </div>
+
+        <div *ngIf="auth.getUsername() === authorUsername" class="mark-correct">
+          <button (click)="markAsCorrect(answer.id)" class="mark-btn">
+            {{ answer.is_correct ? '❌ Quitar correcto' : '✔ Marcar como correcta' }}
+          </button>
+        </div>
         
+
+        <!-- Footer con fecha y autor -->
         <div class="post-footer">
           <div class="user-info">
-            <span class="date">Respondido el {{ answer.createdAt | date }}</span>
+            <span class="date">Respondido por:  {{ answer.createdAt | date }}</span>
             <div class="user-details">
               <div class="user-meta">
-                <span>{{ answer.author?.username || 'Anónimo' }}</span>
+                {{ answer.user?.username || answer.username || answer.author?.username || 'Anónimo' }}
               </div>
             </div>
           </div>
@@ -53,29 +82,34 @@
     </div>
   </div>
 
+  <!-- Sección para publicar nueva respuesta -->
   <div class="post-answer-section">
     <h2>Tu respuesta</h2>
-    
+
     <div *ngIf="auth.isLoggedIn(); else loginPrompt">
-      <textarea [(ngModel)]="newAnswerContent" 
-                placeholder="Escribe tu respuesta aquí..." 
+      <textarea [(ngModel)]="newAnswerContent"
+                placeholder="Escribe tu respuesta aquí..."
                 class="answer-textarea"></textarea>
-      
+
+      <!-- Error al enviar -->
       <div *ngIf="submitError" class="error">
         {{ submitError }}
         <div *ngIf="submitError.includes('al menos') && newAnswerContent.trim().length < 23" class="error-detail">
           (Actual: {{ newAnswerContent.trim().length }}/23 caracteres)
         </div>
       </div>
-      
+
+      <!-- Botón enviar -->
       <button (click)="submitAnswer()" class="submit-btn" [disabled]="isSubmitting">
         {{ isSubmitting ? 'Enviando...' : 'Publicar respuesta' }}
       </button>
     </div>
-    
+
+    <!-- Si no ha iniciado sesión -->
     <ng-template #loginPrompt>
       <div class="login-prompt">
-        <p>Para responder, por favor 
+        <p>
+          Para responder, por favor
           <a [routerLink]="['/login']" [queryParams]="{ returnUrl: router.url }">
             inicia sesión
           </a>

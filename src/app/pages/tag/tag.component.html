@@ -1,15 +1,27 @@
-<p>Estas son las etiquetas</p>
-<h1>formulario</h1>
-<div [formGroup]="tag">
-    <label for="name">Name: </label>
-    <input id="name" type="name" formControlName="name" />
-    <label for="description">Description: </label>
-    <input id="description" type="description" formControlName="description" />
-    <button (click)="createTag()">Crear tag</button>
-</div>
-<h1>Etiquetas</h1>
-<ul>
-@for (tag of tags; track $index) {
-    <li>Nombre: {{ tag.name }}</li>
-}
-</ul>
+<div class="overlay">
+    <div class="tag-box" [formGroup]="tagForm">
+      <h2>Crear Etiqueta</h2>
+  
+      <label for="name">Nombre:</label>
+      <input id="name" type="text" formControlName="name" />
+  
+      <label for="description">Descripción:</label>
+      <input id="description" type="text" formControlName="description" />
+  
+      <button (click)="createTag()">Crear etiqueta</button>
+  
+      @if (tagForm.invalid && tagForm.touched) {
+        <div class="error">Revisa los campos antes de enviar</div>
+      }
+  
+      <h3>Etiquetas existentes</h3>
+      <ul class="tag-list">
+        @for (tag of tags; track $index) {
+          <li>
+            <strong>{{ tag.name }}</strong> - {{ tag.description }}
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+  

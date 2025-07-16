@@ -1,3 +1,4 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, Observable } from 'rxjs';
@@ -57,4 +58,17 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+  getUsername(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+  
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub || null;
+    } catch (error) {
+      console.error('Error al decodificar el token', error);
+      return null;
+    }
+  }
+  
 }
